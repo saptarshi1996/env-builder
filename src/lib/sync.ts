@@ -2,6 +2,7 @@ import fs from 'fs'
 
 import parse from './parser'
 import {
+  clearFile,
   ifFileExistsThenCreate
 } from './file'
 
@@ -11,42 +12,63 @@ export const createInit = () => {
 }
 
 export const syncEnvExample = () => {
+
+  // Get data from .env file
   ifFileExistsThenCreate('.env')
 
-  // Remove the key values from .env.example so that they are not pushed to version control
-  const fileData = fs.readFileSync('.env', 'utf-8')
-  const keyValue = parse(fileData)
-
-  ifFileExistsThenCreate('.env.example')
-
-  const fileDataExample = fs.readFileSync('.env.example', 'utf-8')
-  const keyValueExample = parse(fileDataExample)
-
-  // update keys of .env with .env.example
-  Object.keys(keyValueExample).forEach((key) => {
-    keyValue[key] = keyValueExample[key]
-  })
-
-  console.log(keyValue)
-  console.log(keyValueExample)
-}
-
-export const syncEnv = () => {
-  ifFileExistsThenCreate('.env.example')
-
-  // Remove the key values from .env so that they are not pushed to version control
-  const fileData = fs.readFileSync('.env.example', 'utf-8')
-  const keyValue = parse(fileData)
-
-  ifFileExistsThenCreate('.env')
-
+  // Read .env file and make key value pairs.
   const fileDataEnv = fs.readFileSync('.env', 'utf-8')
   const keyValueEnv = parse(fileDataEnv)
 
-  Object.keys(keyValueEnv).forEach((key) => {
-    keyValue[key] = keyValueEnv[key]
+  ifFileExistsThenCreate('.env.example')
+
+  // Read .env.example and make key value pairs.
+  const fileDataExample = fs.readFileSync('.env.example', 'utf-8')
+  const keyValueExample = parse(fileDataExample)
+
+  // For every key in .env update example but don't put value.
+  Object.keys(keyValueEnv).forEach((key: string) => {
+    if (!keyValueExample[key]) {
+      keyValueExample[key] = ''
+    }
   })
 
-  console.log(keyValue)
+  clearFile('.env.example')
+  Object.keys(keyValueExample).forEach((key: string) => {
+    const keyValue = `${key}=\n`
+    fs.appendFileSync('.env.example', keyValue)
+  })
+}
+
+export const syncEnv = () => {
+
+  // Get data from .env.example and update .env
+  ifFileExistsThenCreate('.env.example')
+
+  // Read .env.example and make key value pairs.
+  const fileDataExample = fs.readFileSync('.env.example', 'utf-8')
+  const keyValueExample = parse(fileDataExample)
+
+  ifFileExistsThenCreate('.env')
+
+  // Read .env and make key value pairs.
+  const fileDataEnv = fs.readFileSync('.env', 'utf-8')
+  const keyValueEnv = parse(fileDataEnv)
+
   console.log(keyValueEnv)
+  console.log(keyValueExample)
+
+  // Every key present in .env.example has to be written to .env
+  // Keys in .env should not be updated.
+  Object.keys(keyValueExample).forEach((key: string) => {
+    if (!keyValueEnv[key]) {
+      keyValueEnv[key] = keyValueExample[key]
+    }
+  })
+
+  clearFile('.env')
+  Object.keys(keyValueEnv).forEach((key: string) => {
+    const keyValue = `${key}=${keyValueEnv[key]}\n`
+    fs.appendFileSync('.env', keyValue)
+  })
 }

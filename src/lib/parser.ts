@@ -1,8 +1,8 @@
 import { getLine } from './constant'
 
-const LINE = getLine()
-
 export default function parse (src: string): Record<string, unknown> {
+
+  const LINE = getLine()
   const obj: Record<string, unknown> = {}
 
   let lines = src.toString()

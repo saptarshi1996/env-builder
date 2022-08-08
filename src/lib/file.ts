@@ -21,3 +21,5 @@ export const ifFileExistsThenCreate = (path: string) => {
     fs.openSync(path, 'w')
   }
 }
+
+export const clearFile = (path: string) => fs.writeFileSync(path, '')
