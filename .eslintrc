@@ -2,8 +2,7 @@
     "root": true,
     "parser": "@typescript-eslint/parser",
     "plugins": [
-        "@typescript-eslint",
-        "unicorn"
+        "@typescript-eslint"
     ],
     "extends": [
         "eslint:recommended",
@@ -27,14 +26,6 @@
         ],
         "@typescript-eslint/no-explicit-any": "off",
         "no-var": "warn",
-        "no-unused-vars": "error",
-        "unicorn/filename-case": [
-            "error",
-            {
-                "cases": {
-                    "snakeCase": true
-                }
-            }
-        ]
+        "no-unused-vars": "error"
     }
 }

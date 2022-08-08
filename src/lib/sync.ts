@@ -55,9 +55,6 @@ export const syncEnv = () => {
   const fileDataEnv = fs.readFileSync('.env', 'utf-8')
   const keyValueEnv = parse(fileDataEnv)
 
-  console.log(keyValueEnv)
-  console.log(keyValueExample)
-
   // Every key present in .env.example has to be written to .env
   // Keys in .env should not be updated.
   Object.keys(keyValueExample).forEach((key: string) => {
