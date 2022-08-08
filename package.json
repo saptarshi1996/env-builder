@@ -11,9 +11,9 @@
   "dependencies": {
     "commander": "^9.4.0"
   },
-  "name": "env-builder",
+  "name": "build-sync",
   "description": "Keep env files in sync with this cli tool",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "main": "src/index.js",
   "scripts": {
     "build": "tsc",
@@ -24,7 +24,7 @@
     "env-builder-dev": "npx nodemon src/index.ts"
   },
   "bin": {
-    "env-builder": "dist/index.js"
+    "build-sync": "dist/index.js"
   },
   "repository": {
     "type": "git",
