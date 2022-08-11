@@ -6,4 +6,10 @@ export const ifFileExistsThenCreate = (path: string) => {
   }
 }
 
+export const ifFileExists = (path: string) => {
+  if (!fs.existsSync(path)) {
+    throw new Error('.Env file not found')
+  }
+}
+
 export const clearFile = (path: string) => fs.writeFileSync(path, '')

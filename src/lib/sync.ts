@@ -3,6 +3,7 @@ import fs from 'fs'
 import parse from './parser'
 import {
   clearFile,
+  ifFileExists,
   ifFileExistsThenCreate
 } from './file'
 
@@ -68,4 +69,16 @@ export const syncEnv = () => {
     const keyValue = `${key}=${keyValueEnv[key]}\n`
     fs.appendFileSync('.env', keyValue)
   })
+}
+
+export const base64EncodeEnv = () => {
+
+  ifFileExists('.env')
+
+  // Convert .env file to base64
+  const fileDataEnv = fs.readFileSync('.env', 'utf-8')
+  const base64 = Buffer.from(fileDataEnv).toString('base64')
+
+  // TODO: Copy to clipboard for easy pasting.
+  console.log(base64)
 }
