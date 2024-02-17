@@ -1,16 +1,16 @@
 import { program } from 'commander'
 
-import { getPrograms } from '../lib/constant'
-import Program from '../interfaces/program'
+import { getPrograms } from '../config/constant'
 
 export default function loadProgram () {
 
   const programList = getPrograms()
-  programList.forEach((programType: Program) => {
+
+  for (const programType of programList) {
     program.command(programType.command)
       .action(programType.action)
       .description(programType.description)
-  })
+  }
 
-  program.parse()
+  program.option('-en, --encode', 'URL').parse(process.argv)
 }

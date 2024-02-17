@@ -1,10 +1,11 @@
 {
   "dependencies": {
-    "commander": "^12.0.0"
+    "clipboardy": "^4.0.0",
+    "commander": "^9.4.0"
   },
   "name": "build-sync",
   "description": "Keep env files in sync with this cli tool",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "engines": {
     "npm": ">= 8.19.3",
     "node": ">= 18.13.0",
@@ -15,12 +16,14 @@
   "scripts": {
     "build": "gulp build",
     "prestart": "npm run build",
-    "start": "node .",
+    "start": "node dist/index.js",
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix",
     "spellcheck": "cspell src/",
     "prepare": "husky",
-    "sync": "build-sync"
+    "sync": "build-sync",
+    "dev": "gulp build && node dist/index.js",
+    "endev": "gulp build && node dist/index.js -en"
   },
   "bin": {
     "build-sync": "dist/index.js"

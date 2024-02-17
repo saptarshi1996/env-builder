@@ -1,4 +1,4 @@
-import { getLine } from './constant'
+import { getLine } from '../config/constant'
 
 export default function parse (src: string): Record<string, unknown> {
 

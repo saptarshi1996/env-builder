@@ -6,6 +6,7 @@ import {
   ifFileExists,
   ifFileExistsThenCreate
 } from './file'
+import { program } from 'commander'
 
 export const createInit = () => {
   ifFileExistsThenCreate('.env')
@@ -36,7 +37,7 @@ export const syncEnvExample = () => {
 
   clearFile('.env.example')
   Object.keys(keyValueExample).forEach((key: string) => {
-    const keyValue = `${key}=\n`
+    const keyValue = `${key}={${key}}`
     fs.appendFileSync('.env.example', keyValue)
   })
 }
@@ -65,22 +66,33 @@ export const syncEnv = () => {
   })
 
   clearFile('.env')
-  Object.keys(keyValueEnv).forEach((key: string) => {
-    const keyValue = `${key}=${encodeURIComponent(keyValueEnv[key] as string)}\n`
-    fs.appendFileSync('.env', keyValue)
-  })
+
+  if ('encode' in program.opts() && program.opts().encode === true) {
+    Object.keys(keyValueEnv).forEach((key: string) => {
+      const keyValue = `${key}=${encodeURIComponent(keyValueEnv[key] as string)}\n`
+      fs.appendFileSync('.env', keyValue)
+    })
+  } else {
+    Object.keys(keyValueEnv).forEach((key: string) => {
+      const keyValue = `${key}=${keyValueEnv[key] as string}\n`
+      fs.appendFileSync('.env', keyValue)
+    })
+  }
 }
 
 export const base64EncodeEnv = () => {
-
   ifFileExists('.env')
 
   const fileDataEnv = fs.readFileSync('.env', 'utf-8')
   const keyValueEnv = parse(fileDataEnv)
 
-  Object.keys(keyValueEnv).forEach((key: string) => {
-    console.log(`${key}=${Buffer.from(encodeURIComponent(keyValueEnv[key] as string)).toString('base64')}`)
-  })
-
-  console.log()
+  if ('encode' in program.opts() && program.opts().encode === true) {
+    Object.keys(keyValueEnv).forEach((key: string) => {
+      console.log(`${key}=${Buffer.from(encodeURIComponent(keyValueEnv[key] as string)).toString('base64')}`)
+    })
+  } else {
+    Object.keys(keyValueEnv).forEach((key: string) => {
+      console.log(`${key}=${Buffer.from(keyValueEnv[key] as string).toString('base64')}`)
+    })
+  }
 }

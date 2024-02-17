@@ -4,7 +4,7 @@ import {
   syncEnvExample,
   syncEnv,
   base64EncodeEnv,
-} from './sync'
+} from '../lib/action'
 
 export const getLine = () => /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg
 
@@ -15,17 +15,17 @@ export const getPrograms = (): Program[] => [
     action: createInit,
   },
   {
-    command: '.env',
-    description: 'Update .env using .env.example',
+    command: 'env',
+    description: 'Copy from .env.example to .env',
     action: syncEnv,
   },
   {
-    command: '.env.example',
-    description: 'Update .env.example using .env',
+    command: 'example',
+    description: 'Copy from .env to .env.example',
     action: syncEnvExample,
   },
   {
-    command: '.env.base64',
+    command: 'base64',
     description: 'Encode .env to base64',
     action: base64EncodeEnv,
   },
