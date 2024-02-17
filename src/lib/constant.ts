@@ -15,17 +15,17 @@ export const getPrograms = (): Program[] => [
     action: createInit,
   },
   {
-    command: 'sync-env',
+    command: '.env',
     description: 'Update .env using .env.example',
     action: syncEnv,
   },
   {
-    command: 'sync-ex',
+    command: '.env.example',
     description: 'Update .env.example using .env',
     action: syncEnvExample,
   },
   {
-    command: 'base64-env',
+    command: '.env.base64',
     description: 'Encode .env to base64',
     action: base64EncodeEnv,
   },
