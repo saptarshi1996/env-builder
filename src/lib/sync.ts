@@ -66,7 +66,7 @@ export const syncEnv = () => {
 
   clearFile('.env')
   Object.keys(keyValueEnv).forEach((key: string) => {
-    const keyValue = `${key}=${keyValueEnv[key]}\n`
+    const keyValue = `${key}=${encodeURIComponent(keyValueEnv[key] as string)}\n`
     fs.appendFileSync('.env', keyValue)
   })
 }
@@ -75,10 +75,12 @@ export const base64EncodeEnv = () => {
 
   ifFileExists('.env')
 
-  // Convert .env file to base64
   const fileDataEnv = fs.readFileSync('.env', 'utf-8')
-  const base64 = Buffer.from(fileDataEnv).toString('base64')
+  const keyValueEnv = parse(fileDataEnv)
 
-  // TODO: Copy to clipboard for easy pasting.
-  console.log(base64)
+  Object.keys(keyValueEnv).forEach((key: string) => {
+    console.log(`${key}=${Buffer.from(encodeURIComponent(keyValueEnv[key] as string)).toString('base64')}`)
+  })
+
+  console.log()
 }

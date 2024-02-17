@@ -2,5 +2,4 @@
 
 import loadProgram from './app/program'
 
-
 loadProgram()
