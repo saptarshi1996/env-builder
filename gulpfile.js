@@ -1,10 +1,10 @@
-let fs = require('fs')
-let fsExtra = require('fs-extra')
-let gulp = require('gulp')
-let swc = require('gulp-swc')
-let terser = require('gulp-terser')
+const fs = require('fs')
+const fsExtra = require('fs-extra')
+const gulp = require('gulp')
+const swc = require('gulp-swc')
+const terser = require('gulp-terser')
 
-let swcOptions = {
+const swcOptions = {
   jsc: {
     target: 'es5'
   },
@@ -13,19 +13,19 @@ let swcOptions = {
   },
 }
 
-let clear = function () {
+const clear = function () {
   return fsExtra.remove('dist')
 }
 
-let generatePackageJson = function () {
-  let packageJson = {
+const generatePackageJson = function () {
+  const packageJson = {
     'type': 'commonjs'
   }
   fs.writeFileSync('dist/package.json', JSON.stringify(packageJson, null, 2))
   return Promise.resolve()
 }
 
-let buildProject = function () {
+const buildProject = function () {
   return gulp.src('src/**/*.ts')
     .pipe(swc(swcOptions))
     .pipe(terser({

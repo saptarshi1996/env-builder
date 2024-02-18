@@ -4,7 +4,7 @@
   },
   "name": "build-sync",
   "description": "Keep env files in sync with this cli tool",
-  "version": "2.4.0",
+  "version": "2.6.1",
   "engines": {
     "npm": ">= 8.19.3",
     "node": ">= 18.13.0",
@@ -19,7 +19,6 @@
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix",
     "spellcheck": "cspell src/",
-    "prepare": "husky",
     "sync": "build-sync",
     "dev": "ts-node src/index.ts"
   },
