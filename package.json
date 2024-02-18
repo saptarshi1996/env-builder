@@ -10,17 +10,18 @@
     "node": ">= 18.13.0",
     "yarn": "disabled"
   },
-  "type": "module",
   "main": "src/index.js",
   "scripts": {
-    "build": "gulp build",
+    "gulp": "ts-node ./node_modules/.bin/gulp",
+    "build": "ts-node ./node_modules/.bin/gulp build",
     "prestart": "npm run build",
     "start": "node .",
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix",
     "spellcheck": "cspell src/",
     "prepare": "husky",
-    "sync": "build-sync"
+    "sync": "build-sync",
+    "dev": "ts-node src/index.ts"
   },
   "bin": {
     "build-sync": "dist/index.js"

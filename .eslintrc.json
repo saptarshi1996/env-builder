@@ -26,6 +26,8 @@
         ],
         "@typescript-eslint/no-explicit-any": "off",
         "no-var": "warn",
-        "no-unused-vars": "error"
+        "no-unused-vars": "error",
+        "no-undef": "off",
+        "@typescript-eslint/no-var-requires": "off"
     }
 }

@@ -1,10 +1,10 @@
-import fs from 'fs'
-import fsExtra from 'fs-extra'
-import gulp from 'gulp'
-import swc from 'gulp-swc'
-import terser from 'gulp-terser'
+let fs = require('fs')
+let fsExtra = require('fs-extra')
+let gulp = require('gulp')
+let swc = require('gulp-swc')
+let terser = require('gulp-terser')
 
-const swcOptions = {
+let swcOptions = {
   jsc: {
     target: 'es5'
   },
@@ -13,19 +13,19 @@ const swcOptions = {
   },
 }
 
-const clear = () => {
+let clear = function () {
   return fsExtra.remove('dist')
 }
 
-const generatePackageJson = () => {
-  const packageJson = {
+let generatePackageJson = function () {
+  let packageJson = {
     'type': 'commonjs'
   }
   fs.writeFileSync('dist/package.json', JSON.stringify(packageJson, null, 2))
   return Promise.resolve()
 }
 
-const buildProject = () => {
+let buildProject = function () {
   return gulp.src('src/**/*.ts')
     .pipe(swc(swcOptions))
     .pipe(terser({
@@ -37,4 +37,4 @@ const buildProject = () => {
     .pipe(gulp.dest('dist'))
 }
 
-export const build = gulp.series([clear, buildProject, generatePackageJson])
+exports.build = gulp.series(clear, buildProject, generatePackageJson)
