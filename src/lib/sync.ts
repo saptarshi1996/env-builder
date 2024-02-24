@@ -72,7 +72,6 @@ export const syncEnv = () => {
 }
 
 export const base64EncodeEnv = () => {
-
   ifFileExists('.env')
 
   const fileDataEnv = fs.readFileSync('.env', 'utf-8')
